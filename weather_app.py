@@ -1,11 +1,10 @@
 import requests
 import os
-from datetime import datetime, timedelta
-# city_name = input("please type your city name: ")
-# country_code = input("please type your country code: ")
-city_name = "ikast"
-country_code = "dk"
+from datetime import datetime
+city_name = input("please type your city name: ")
+country_code = input("please type your country code: ")
 api_key = os.environ.get("OPEN_WEATHER_API_KEY")
+
 location = requests.get(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name},{country_code}&appid={api_key}")
 lat, lon = location.json()[0]["lat"], location.json()[0]["lon"]
 curr_weather = requests.get(
@@ -26,19 +25,11 @@ for key in forecast_temps:
     forecast_temps[key] = (sum(forecast_temps[key])/len(forecast_temps[key]))
 
 day = 0
+forecasts_list = []
 for key in forecast_temps:
-    day += 1
-    if day == 1:
-        tomorrow = f"the average weather tomorrow will be {round(forecast_temps[key], 2)}ºC"
-    elif day == 2:
-        day_2 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
-    elif day == 3:
-        day_3 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
-    elif day == 4:
-        day_4 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
-    elif day == 5:
-        day_5 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
+    forecasts_list.append(f"{key} {round(forecast_temps[key], 2)}ºC")
 
-
+forecasts = "\n".join(forecasts_list)
 print(f"the current weather in {curr_dict['name']} is {curr_dict['main']['temp']}ºC\n"
-      f"{tomorrow}\n{day_2}\n{day_3}\n{day_4}\n{day_5}")
+      f"the weather on the following days will be:\n"
+      f"{forecasts}")
