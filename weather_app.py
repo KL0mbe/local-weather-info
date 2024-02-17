@@ -25,6 +25,20 @@ for key in forecast_dict["list"]:
 for key in forecast_temps:
     forecast_temps[key] = (sum(forecast_temps[key])/len(forecast_temps[key]))
 
-print(forecast_temps)
-# print(f"the current weather in {curr_dict['name']} is {curr_dict['main']['temp']}ºC\n"
-#       f"the average weather tomorrow will be {forecast_temps[0]}ºC")
+day = 0
+for key in forecast_temps:
+    day += 1
+    if day == 1:
+        tomorrow = f"the average weather tomorrow will be {round(forecast_temps[key], 2)}ºC"
+    elif day == 2:
+        day_2 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
+    elif day == 3:
+        day_3 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
+    elif day == 4:
+        day_4 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
+    elif day == 5:
+        day_5 = f"the average weather on {key} will be {round(forecast_temps[key], 2)}ºC"
+
+
+print(f"the current weather in {curr_dict['name']} is {curr_dict['main']['temp']}ºC\n"
+      f"{tomorrow}\n{day_2}\n{day_3}\n{day_4}\n{day_5}")
